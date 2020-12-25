@@ -14,11 +14,11 @@ module.exports = function(app) {
 
   app.get(`${baseUrl}/all`, [authJwt.verifyToken], controller.getEvents);
 
-  app.get(`${baseUrl}/user-events`, [authJwt.verifyToken], controller.getUserEvents);
+  app.post(`${baseUrl}/user-events`, controller.getUserEvents);
 
   app.get(`${baseUrl}/:id`, [authJwt.verifyToken], controller.getEventById);
 
-  app.post(`${baseUrl}/add`, [authJwt.verifyToken], controller.addEvent);
+  app.post(`${baseUrl}/add`, controller.addEvent);
 
   app.delete(`${baseUrl}/:id`, [authJwt.verifyToken], controller.deleteEvent);
 

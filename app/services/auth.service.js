@@ -38,7 +38,7 @@ exports.signin = async (req) => {
         expiresIn: 86400 // 24 hours 
     });
    let result = {
-        id: user._id,
+        _id: user._id,
         username: user.username,
         surname: user.surname,
         city: user.city,

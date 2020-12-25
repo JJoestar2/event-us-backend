@@ -6,8 +6,8 @@ const { formateDate } = require("../utils/formateDate");
 
 exports.getEvents = async (req, res) => {
     try {
-        let events = await EventService.getEvents()
-        return res.status(200).json({ status: 200, data: events });
+        let events = await EventService.getEvents();
+        return res.status(200).send(events);
     } catch (e) {
         return res.status(400).json({ status: 400, message: e.message });
     }
@@ -17,7 +17,7 @@ exports.getEventById = async (req, res) => {
     const id = req.params.id;
     try {
         let event = await EventService.getEventById(id);
-        return res.status(200).json({ status: 200, data: event });
+        return res.status(200).send(event);
     } catch (e) {
         return res.status(400).json({ status: 400, message: e.message });
     }
@@ -33,9 +33,10 @@ exports.addEvent = async (req, res) => {
         creator: mongoose.Types.ObjectId(req.body.userId) });
     try {
         await EventService.addEvent(event);
-        return res.status(200).json({ status: 200, message: "Successuflly created event" });
+        let newEvent = await EventService.getEventById(event._id);
+        return res.status(200).send(newEvent);
     } catch (e) {
-        return res.status(400).json({ status: 400, message: e.message });
+        return res.status(400).json({ message: e.message });
     }
 }
 
@@ -53,7 +54,7 @@ exports.getUserEvents = async (req, res) => {
   const id = req.body.userId;
   try {
       let userEvents = await EventService.getUserEvents(id);
-      return res.status(200).json({ status: 200, data: userEvents });
+      return res.status(200).send(userEvents);
   } catch (e) {
       return res.status(400).json({ status: 400, message: e.message });
   }
